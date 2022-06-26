@@ -4,6 +4,7 @@ self.addEventListener("install",(e)=>{
   // caching the page
   return e.waitUntil(
     caches.open("front").then((cache)=> {
+      // add caches
       cache.add('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css')
       cache.add('/')
       cache.add('https://reqres.in/img/faces/1-image.jpg')
@@ -26,7 +27,7 @@ self.addEventListener("activate",(e)=>{
 })
 
 self.addEventListener('fetch',(e) => {
-  // fetch request when offline or when online
+  // fetch requests when offline or when online
   return e.respondWith(
     caches.open("front").then((cache)=>{
       return cache.match(e.request).then(res=>{

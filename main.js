@@ -8,6 +8,16 @@ if("serviceWorker" in navigator){
   // service worker registeration
   navigator.serviceWorker.register("./sw.js").then(()=>{
     console.log("sw registered")
+     // get location
+    // navigator.geolocation.getCurrentPosition(
+    //   (position)=>{
+    //     console.log({lat:position.coords.latitude,lng:position.coords.longitude})
+    //   },
+    //   (error)=>{
+    //     console.log(error)
+    //   },
+    //   {timeout:10000}
+    // )
   })
 }else{
   console.error("Service worker not supported!");
@@ -30,7 +40,7 @@ window.addEventListener("beforeinstallprompt",(e)=>{
 const users = document.getElementById("users");
 axios({
   method:'get',
-  url:"httpsers?page=1"
+  url:"https://reqres.in/api/users?page=1"
 }).then((response)=>{
   response.data.data.forEach(user=> {
     // set data in db
@@ -48,7 +58,7 @@ axios({
   </div>`
   )
 }).then(()=>users.innerHTML = users.innerHTML.replaceAll(",", " ")).catch(()=>{
-  // use offline db
+  // use offline data from db
   if("indexedDB" in window) db.users.toArray().then((dbUsers)=>{
     users.innerHTML = dbUsers.map((user) => 
     `<div class="m-2" style="width:18rem;" >
